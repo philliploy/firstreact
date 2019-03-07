@@ -1,19 +1,60 @@
 import React, { Component } from "react";
-import logo from "./logo.svg";
-import "./App.css";
+import FriendCard from "./components/FriendCard";
+import Wrapper from "./components/Wrapper";
+import Title from "./components/Title";
+import friends from "./friends.json";
 
 class App extends Component {
+  // Setting this.state.friends to the friends json array
+  state = {
+    friends,
+    topscore: 0,
+    score: 0
+  };
+
+ 
+ 
+  removeFriend = id => {
+ 
+    
+   friends.map(friend => {
+  
+      
+      if (friend.id === id && friend.clicked === 0) {
+        friend.clicked=1;
+        this.setState({ friends: friends, score: this.state.score + 1, topscore: this.state.topscore + 1 });
+        return true;  
+      } else if (friend.id === id && friend.clicked === 1) {
+  
+       this.setState({   score: 0 });
+       return false;
+      }
+
+       
+      return false;
+    });
+ 
+     friends.sort(() => Math.random() - 0.5);
+  }
+
+   
+
   render() {
     return (
-      <div className="App">
-        <div className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h2>Welcome to React</h2>
-        </div>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
-      </div>
+      <Wrapper>
+        <Title>Friends List score: {this.state.score} {this.state.topscore}  </Title>
+        {this.state.friends.map(friend => (
+          <FriendCard
+            removeFriend={this.removeFriend}
+            id={friend.id}
+            key={friend.id}
+            name={friend.name}
+            image={friend.image}
+            occupation={friend.occupation}
+            location={friend.location}
+          />
+        ))}
+      </Wrapper>
     );
   }
 }
