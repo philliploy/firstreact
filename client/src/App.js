@@ -3,7 +3,7 @@ import FriendCard from "./components/FriendCard";
 import Wrapper from "./components/Wrapper";
 import Title from "./components/Title";
 import friends from "./friends.json";
-
+ 
 class App extends Component {
   // Setting this.state.friends to the friends json array
   state = {
